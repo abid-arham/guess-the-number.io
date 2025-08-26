@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      color: white;
+      text-align: center;
+    }
+
+    .game-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      animation: popIn 0.8s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #ffe;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    }
+
+    input, button {
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      margin-top: 0.5rem;
+    }
+
+    input {
+      width: 80%;
+      text-align: center;
+    }
+
+    button {
+      background: #06beb6;
+      color: white;
+      cursor: pointer;
+      margin-top: 1rem;
+      width: 100%;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #48b1bf;
+    }
+
+    .message {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      min-height: 40px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎲 Number Guessing Game</h1>
+    <p>Enter a maximum number to start:</p>
+    <input type="number" id="max" placeholder="Max number">
+    <button onclick="startGame()">Start Game</button>
+
+    <div id="game" style="display:none;">
+      <p>Guess the number between <span id="range"></span></p>
+      <input type="number" id="guess" placeholder="Enter your guess">
+      <button onclick="makeGuess()">Submit Guess</button>
+      <div class="message" id="message"></div>
+    </div>
+  </div>
+
+  <script>
+    let generated;
+
+    function startGame(){
+      const max = document.getElementById("max").value;
+      if(!max || max <= 0){
+        alert("Please enter a valid number!");
+        return;
+      }
+      generated = Math.floor(Math.random()*max) + 1;
+      document.getElementById("range").innerText = `1 and ${max}`;
+      document.getElementById("game").style.display = "block";
+      document.getElementById("message").innerText = "";
+    }
+
+    function makeGuess(){
+      const guess = document.getElementById("guess").value;
+      const message = document.getElementById("message");
+
+      if(!guess){
+        message.innerText = "Please enter a guess!";
+        return;
+      }
+
+      if(guess == generated){
+        message.style.color = "#ffffff";
+        message.innerText = "🎉 Shabash!! Bagher baccha!";
+      } else if(guess > generated){
+        message.style.color = "#ffffff";
+        message.innerText = "⚠️ Woahh! Onek boro, ektu komao";
+      } else {
+        message.style.color = "#ffffff";
+        message.innerText = "😬 Uh oh! onek choto, ektu barao";
+      }
+    }
+  </script>
+</body>
+</html>
